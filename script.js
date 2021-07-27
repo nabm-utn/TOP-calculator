@@ -39,18 +39,76 @@ function inputOperator (e) {
 }
 
 function inputEqual (e) {
+    expression.push(currentInput);
     result = evaluate(expression);
     expression = [];
     currentInput = "";
     refreshDisplay(showResult=true);
 }
 
-function array2exp(exp) {
-    return {};
+function addition(a, b) {return a + b};
+function substraction(a, b) {return a - b};
+function multiplication(a, b) {return a * b};
+function division(a, b) {return b === 0 ? "Division by Zero Error": a / b}
+function parseNumber(string) {return string.includes(".") ? parseFloat(string): parseInt(string)}
+
+function correctExpression(array) {
+    const re = /^[+\-x/]+$/;
+    // check and correct starting operators
+    if (array[0] === "-" || array[0] === "+") array.unshift("0");
+    if (array[0] === "x" || array[0] === "x") array.unshift("1");
+    
+    for (let i = 0; i < array.length; i++) {
+        // check and report double operators
+        if (re.test(array[i])) {
+            if (array[i+1] === "" && re.test(array[i+2])) return false;}
+        // } else if (array[i].includes(".")) {
+        //     array[i] = parseFloat(array[i]);
+        // } else {
+        //     array[i] = parseInt(array[i]);
+        // }
+
+    }
+    // check and correct ending operators
+    const l = array.length
+    if (re.test(array[l])) array.pop();
+
+    return array;
+}
+
+function array2exp(array) {
+    array = correctExpression(array);
+    if (array === false) return {value: "Syntax Error",};
+    
+    let exp = {value: null,};
+
+    // main operator is addition
+    let additionIndex = array.indexOf("+");
+    if (additionIndex !== -1) {
+        exp["function"] = addition;
+        exp["leftChild"] = array2exp(array.slice(0, additionIndex));
+        exp["rightChild"] = array2exp(array.slice(additionIndex+1));
+        return exp;
+    }
+
+    // main operator is substraction
+    // main operator is multiplication
+    // main operator is division 
+
+    // no operator left
+    if (array.length === 1) {
+        exp["value"] = parseNumber(array[0]);
+        return exp;
+    }
+
+    // fallback case!
+    return {value: "fallback"};
+    
 }
 
 function solve(exp) {
-    return 0;
+    if (exp.value !== null) return exp.value;
+    return exp.function(solve(exp.leftChild), solve(exp.rightChild));
 }
 
 function evaluate(exp) {
