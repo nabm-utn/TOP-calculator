@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+
 body {
     background-color: slateblue;
     display: flex;
@@ -31,6 +33,11 @@ h1 {
     align-items: center;
 }
 
+.display > div {
+    font-size: 5vmin;
+    font-family: 'Orbitron', sans-serif;
+}
+
 .keyboard {
     grid-column: 2 / 3;
     grid-row: 4 / 5;
@@ -42,6 +49,8 @@ h1 {
 }
 
 .keyboard > button {
+    font-size: 5vmin;
+    font-family: 'Orbitron', sans-serif;
     transition: box-shadow 0.3s ease-in-out;
 }
 
