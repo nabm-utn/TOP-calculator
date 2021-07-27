@@ -92,8 +92,31 @@ function array2exp(array) {
     }
 
     // main operator is substraction
+    let substractionIndex = array.indexOf("-");
+    if (substractionIndex !== -1) {
+        exp["function"] = substraction;
+        exp["leftChild"] = array2exp(array.slice(0, substractionIndex));
+        exp["rightChild"] = array2exp(array.slice(substractionIndex+1));
+        return exp;
+    }
+
     // main operator is multiplication
+    let multiplicationIndex = array.indexOf("x");
+    if (multiplicationIndex !== -1) {
+        exp["function"] = multiplication;
+        exp["leftChild"] = array2exp(array.slice(0, multiplicationIndex));
+        exp["rightChild"] = array2exp(array.slice(multiplicationIndex+1));
+        return exp;
+    }
+
     // main operator is division 
+    let divisionIndex = array.indexOf("/");
+    if (divisionIndex !== -1) {
+        exp["function"] = division;
+        exp["leftChild"] = array2exp(array.slice(0, divisionIndex));
+        exp["rightChild"] = array2exp(array.slice(divisionIndex+1));
+        return exp;
+    }
 
     // no operator left
     if (array.length === 1) {
@@ -102,8 +125,7 @@ function array2exp(array) {
     }
 
     // fallback case!
-    return {value: "fallback"};
-    
+    return exp;   
 }
 
 function solve(exp) {
