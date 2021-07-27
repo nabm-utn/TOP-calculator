@@ -1,0 +1,17 @@
+.body {
+    background-color: slateblue;
+}
+
+.frame {
+    background-color: steelblue;
+    width: 80vmin;
+    height: 80vmin;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(12, 1fr);
+}
+
+.display {
+    background-color: darkslategray;
+    color: darksalmon;
+}
