@@ -6,6 +6,11 @@ body {
     align-items: center;
 }
 
+h1 {
+    color: rgb(255, 210, 7);
+    font-weight: bolder;
+    text-shadow: 1px 1px 0px goldenrod;
+}
 .frame {
     background-color: steelblue;
     width: 80vmin;
@@ -13,9 +18,13 @@ body {
     display: grid;
     grid-template-columns: repeat(10, 1fr);
     grid-template-rows: repeat(12, 1fr);
+    border-radius: 20px;
 }
 
 .display {
     background-color: darkslategray;
     color: darksalmon;
+    grid-column: 2 / 10;
+    grid-row: 2 / 4;
 }
+
