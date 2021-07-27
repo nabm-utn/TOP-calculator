@@ -32,14 +32,14 @@ function inputDot (e) {
 }
 
 function inputOperator (e) {
-    expression.push(currentInput);
+    if (currentInput !== "") {expression.push(currentInput);};
     expression.push(e.target.textContent);
     currentInput = "";
     refreshDisplay();
 }
 
 function inputEqual (e) {
-    expression.push(currentInput);
+    if (currentInput !== "") {expression.push(currentInput);};
     result = evaluate(expression);
     expression = [];
     currentInput = "";
@@ -55,20 +55,12 @@ function parseNumber(string) {return string.includes(".") ? parseFloat(string): 
 function correctExpression(array) {
     const re = /^[+\-x/]+$/;
     // check and correct starting operators
-    if (array[0] === "") array.shift()
     if (array[0] === "-" || array[0] === "+") array.unshift("0");
     if (array[0] === "x" || array[0] === "x") array.unshift("1");
     
     for (let i = 0; i < array.length; i++) {
         // check and report double operators
-        if (re.test(array[i])) {
-            if (array[i+1] === "" && re.test(array[i+2])) return false;}
-        // } else if (array[i].includes(".")) {
-        //     array[i] = parseFloat(array[i]);
-        // } else {
-        //     array[i] = parseInt(array[i]);
-        // }
-
+        if (re.test(array[i]) && re.test(array[i+1])) {return false;};
     }
     // check and correct ending operators
     const l = array.length
