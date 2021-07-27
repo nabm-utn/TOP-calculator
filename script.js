@@ -55,6 +55,7 @@ function parseNumber(string) {return string.includes(".") ? parseFloat(string): 
 function correctExpression(array) {
     const re = /^[+\-x/]+$/;
     // check and correct starting operators
+    if (array[0] === "") array.shift()
     if (array[0] === "-" || array[0] === "+") array.unshift("0");
     if (array[0] === "x" || array[0] === "x") array.unshift("1");
     
